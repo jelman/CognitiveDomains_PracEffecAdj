@@ -164,71 +164,114 @@ vetsa1Dat$TRL3TRAN = -1*log(vetsa1Dat$TRL3T)
 # Standardization is based off of VETSA1 Means and SDs  #
 #########################################################
 
-# VETSA1 Verbal Ability
-vetsa1Dat$zVerbal = (vetsa1Dat$voctran - (-4.0930)) / 0.9726
+## Create function to save mean and SD of all variables ##
+addScaleVals = function(df,varname, x) {
+  meanVal = attr(x, which="scaled:center")
+  sdVal = attr(x, which="scaled:scale")
+  rbind(df, data.frame(Variable=varname, Mean=meanVal, SD=sdVal))
+}
 
-# Standardized MR1COR
-vetsa1Dat$zMR1COR = (vetsa1Dat$MR1COR - 47.5498) / 13.4463
+## Initialize dataframe to hold means and SDs # #
+scaleValues = data.frame()
 
-# Standardized HFTOTCOR
-vetsa1Dat$zHFTOTCOR = (vetsa1Dat$HFTOTCOR - 21.2055) / 9.0907
 
-# vetsa1 Visual-Spatial Ability
+# Vetsa1 Verbal Ability 
+vetsa1Dat$zvoctran = scale(vetsa1Dat$voctran)
+scaleValues = addScaleVals(scaleValues, "voctran", vetsa1Dat$zvoctran)
+
+vetsa1Dat$zVerbal = vetsa1Dat$zvoctran
+
+# vetsa1 Visual-Spatial Ability 
+vetsa1Dat$zMR1COR = scale(vetsa1Dat$MR1COR)
+scaleValues = addScaleVals(scaleValues, "MR1COR", vetsa1Dat$zMR1COR)
+vetsa1Dat$zHFTOTCOR = scale(vetsa1Dat$HFTOTCOR)
+scaleValues = addScaleVals(scaleValues, "HFTOTCOR", vetsa1Dat$zHFTOTCOR)
+
 vetsa1Dat$zVisSpat = rowMeans(vetsa1Dat[c("zMR1COR","zHFTOTCOR")])
 
-# vetsa1 Abstract Reasoning
-vetsa1Dat$zAbsReason = (vetsa1Dat$MTXTRAN - (-3.5041)) / 0.7799
+# vetsa1 Abstract Reasoning 
+vetsa1Dat$zMTXTRAN = scale(vetsa1Dat$MTXTRAN)
+scaleValues = addScaleVals(scaleValues, "MTXTRAN", vetsa1Dat$zMTXTRAN)
 
-vetsa1Dat$zdsfraw = (vetsa1Dat$dsfraw - 10.1910)/2.2851
-vetsa1Dat$zdsbraw = (vetsa1Dat$dsbraw - 6.5109)/2.1673
-vetsa1Dat$zlntot = (vetsa1Dat$lntot - 10.1434)/2.3546
-vetsa1Dat$zsspfraw = (vetsa1Dat$sspfraw - 8.0273)/1.6550
-vetsa1Dat$zsspbraw = (vetsa1Dat$sspbraw - 7.4063)/1.8013
-# Standardized/Transformed Reading Span
-vetsa1Dat$zrsatotrevtran = (vetsa1Dat$RSATOTrevtran - (-3.2157))/0.7699 
+vetsa1Dat$zAbsReason = vetsa1Dat$zMTXTRAN
 
-# vetsa1 Working Memory
+# Vetsa1 Working Memory 
+vetsa1Dat$zdsfraw = scale(vetsa1Dat$dsfraw)
+scaleValues = addScaleVals(scaleValues, "dsfraw", vetsa1Dat$zdsfraw)
+vetsa1Dat$zdsbraw = scale(vetsa1Dat$dsbraw)
+scaleValues = addScaleVals(scaleValues, "dsbraw", vetsa1Dat$zdsbraw)
+vetsa1Dat$zlntot = scale(vetsa1Dat$lntot)
+scaleValues = addScaleVals(scaleValues, "lntot", vetsa1Dat$zlntot)
+vetsa1Dat$zsspfraw = scale(vetsa1Dat$sspfraw)
+scaleValues = addScaleVals(scaleValues, "sspfraw", vetsa1Dat$zsspfraw)
+vetsa1Dat$zsspbraw = scale(vetsa1Dat$sspbraw)
+scaleValues = addScaleVals(scaleValues, "sspbraw", vetsa1Dat$zsspbraw)
+vetsa1Dat$zrsatotrevtran = scale(vetsa1Dat$RSATOTrevtran) 
+scaleValues = addScaleVals(scaleValues, "RSATOTrevtran", vetsa1Dat$zrsatotrevtran)
+
 vetsa1Dat$zSTWKMem = rowMeans(vetsa1Dat[,c("zdsfraw","zdsbraw",
                                               "zlntot","zsspfraw",
                                               "zsspbraw","zrsatotrevtran")])
 
-vetsa1Dat$zcvatot = (vetsa1Dat$cvatot - 42.8466)/8.5101
-vetsa1Dat$zcvsdfr = (vetsa1Dat$CVSDFR - 8.6420)/2.7382 
-vetsa1Dat$zcvldfr = (vetsa1Dat$CVLDFR - 9.0669)/2.8865 
-vetsa1Dat$zlmitot = (vetsa1Dat$lmitot - 23.4731)/6.1563
-vetsa1Dat$zlmdtot = (vetsa1Dat$lmdtot - 20.0125)/6.6278
-vetsa1Dat$zvritot = (vetsa1Dat$vritot - 78.2430)/12.4047
-vetsa1Dat$zvrdtot = (vetsa1Dat$vrdtot - 54.7521)/19.5090
-#vetsa1 Episodic Memory
+# vetsa1 Episodic Memory 
+vetsa1Dat$zcvatot = scale(vetsa1Dat$cvatot)
+scaleValues = addScaleVals(scaleValues, "cvatot", vetsa1Dat$zcvatot)
+vetsa1Dat$zcvsdfr = scale(vetsa1Dat$CVSDFR)
+scaleValues = addScaleVals(scaleValues, "CVSDFR", vetsa1Dat$zcvsdfr)
+vetsa1Dat$zcvldfr = scale(vetsa1Dat$CVLDFR)
+scaleValues = addScaleVals(scaleValues, "CVLDFR", vetsa1Dat$zcvldfr)
+vetsa1Dat$zlmitot = scale(vetsa1Dat$lmitot)
+scaleValues = addScaleVals(scaleValues, "lmitot", vetsa1Dat$zlmitot)
+vetsa1Dat$zlmdtot = scale(vetsa1Dat$lmdtot)
+scaleValues = addScaleVals(scaleValues, "lmdtot", vetsa1Dat$zlmdtot)
+vetsa1Dat$zvritot = scale(vetsa1Dat$vritot)
+scaleValues = addScaleVals(scaleValues, "vritot", vetsa1Dat$zvritot)
+vetsa1Dat$zvrdtot = scale(vetsa1Dat$vrdtot)
+scaleValues = addScaleVals(scaleValues, "vrdtot", vetsa1Dat$zvrdtot)
+
 vetsa1Dat$zEpsMem = rowMeans(vetsa1Dat[,c("zcvatot","zcvsdfr",
                                              "zcvldfr","zlmitot",
                                              "zlmdtot","zvritot",
                                              "zvrdtot")])
 
-vetsa1Dat$zlfcor = (vetsa1Dat$LFCOR - 36.8792)/10.6089
-vetsa1Dat$zcfcor = (vetsa1Dat$CFCOR - 38.2818)/7.5251 
-# vetsa1 Verbal Fluency
+# Vetsa1 Verbal Fluency 
+vetsa1Dat$zlfcor = scale(vetsa1Dat$LFCOR)
+scaleValues = addScaleVals(scaleValues, "LFCOR", vetsa1Dat$zlfcor)
+vetsa1Dat$zcfcor = scale(vetsa1Dat$CFCOR)
+scaleValues = addScaleVals(scaleValues, "CFCOR", vetsa1Dat$zcfcor)
+
 vetsa1Dat$zVerbFlu = rowMeans(vetsa1Dat[,c("zlfcor","zcfcor")])
 
+# Vetsa1 Processing Speed
+vetsa1Dat$zstrwraw = scale(vetsa1Dat$strwraw)
+scaleValues = addScaleVals(scaleValues, "strwraw", vetsa1Dat$zstrwraw)
+vetsa1Dat$zstrcraw = scale(vetsa1Dat$strcraw)
+scaleValues = addScaleVals(scaleValues, "strcraw", vetsa1Dat$zstrcraw)
+vetsa1Dat$ztrl2tran = scale(vetsa1Dat$TRL2TRAN)
+scaleValues = addScaleVals(scaleValues, "TRL2TRAN", vetsa1Dat$ztrl2tran)
+vetsa1Dat$ztrl3tran = scale(vetsa1Dat$TRL3TRAN)
+scaleValues = addScaleVals(scaleValues, "TRL3TRAN", vetsa1Dat$ztrl3tran)
 
-vetsa1Dat$zstrwraw = (vetsa1Dat$strwraw - 93.4668)/14.3125
-vetsa1Dat$zstrcraw = (vetsa1Dat$strcraw - 69.2195)/11.3414
-vetsa1Dat$ztrl2tran = (vetsa1Dat$TRL2TRAN - (-3.4530))/0.3138
-vetsa1Dat$ztrl3tran = (vetsa1Dat$TRL3TRAN - (-3.4520))/0.3274
-vetsa1Dat$ztrl4tran = (vetsa1Dat$TRL4ADJTRAN - (-10.3190))/1.2969 
-
-# vetsa1 Processing Speed
 vetsa1Dat$zProcSpeed = rowMeans(vetsa1Dat[,c("zstrwraw","zstrcraw",
-                                                "ztrl2tran","ztrl3tran")])
+                                                "ztrl2tran","ztrl3tran")],na.rm=T)
 
-# vetsa1 Executive Functioning - Trails Switching
+# Vetsa1 Executive Functioning - Trails Switching 
+vetsa1Dat$ztrl4tran = scale(vetsa1Dat$TRL4ADJTRAN) 
+scaleValues = addScaleVals(scaleValues, "TRL4ADJTRAN", vetsa1Dat$ztrl4tran)
+
 vetsa1Dat$zExecTrailsSwitch = vetsa1Dat$ztrl4tran 
 
 # vetsa1 Executive Functioning - Category Switching
-vetsa1Dat$zExecCategorySwitch = (vetsa1Dat$CSSACCADJ - 6.4447)/2.8568
+vetsa1Dat$zCSSACCADJ = scale(vetsa1Dat$CSSACCADJ)
+scaleValues = addScaleVals(scaleValues, "CSSACCADJ", vetsa1Dat$zCSSACCADJ)
+
+vetsa1Dat$zExecCategorySwitch = vetsa1Dat$zCSSACCADJ
 
 # vetsa1 Executive Functioing - Inhibition
-vetsa1Dat$zExecInhibit = (vetsa1Dat$STRIT - 47.1756)/6.8088 
+vetsa1Dat$zSTRIT = scale(vetsa1Dat$STRIT) 
+scaleValues = addScaleVals(scaleValues, "STRIT", vetsa1Dat$zSTRIT)
+
+vetsa1Dat$zExecInhibit = vetsa1Dat$zSTRIT
 
 
 #-------------------#
@@ -237,15 +280,20 @@ vetsa1Dat$zExecInhibit = (vetsa1Dat$STRIT - 47.1756)/6.8088
 
 # Select cognitive domain variables
 vetsa1CogDomains = vetsa1Dat %>%
-  dplyr::select(vetsaid,zVisSpat,zMR1COR,zHFTOTCOR,zSTWKMem,
-                zdsfraw,zdsbraw,zlntot,zsspfraw,zsspbraw,
+  dplyr::select(vetsaid,zVerbal,zvoctran,zVisSpat,zMR1COR,zHFTOTCOR,
+                zSTWKMem,zdsfraw,zdsbraw,zlntot,zsspfraw,zsspbraw,
                 zrsatotrevtran,zEpsMem,zcvatot,zcvsdfr,zcvldfr,
-                zlmitot,zlmdtot,zvritot,zvrdtot,zAbsReason,
-                zVerbFlu,zlfcor,zcfcor,zExecTrailsSwitch,
-                zExecCategorySwitch,zExecInhibit,zProcSpeed,
-                zstrwraw,zstrcraw,ztrl2tran,ztrl3tran, ztrl4tran) 
+                zlmitot,zlmdtot,zvritot,zvrdtot,zAbsReason,zMTXTRAN,
+                zVerbFlu,zlfcor,zcfcor,zExecTrailsSwitch,ztrl4tran,
+                zProcSpeed,zstrwraw,zstrcraw,ztrl2tran,ztrl3tran,ztrl4tran,
+                zExecCategorySwitch,zCSSACCADJ,zExecInhibit,zSTRIT) 
 
 # Save out data
 write.csv(vetsa1CogDomains, 
           "K:/Projects/Cognitive Domains/data/V1_CognitiveDomains.csv",
+          row.names = F)
+
+# Save out Means and SDs for use in scaling Vetsa 2 data
+write.csv(scaleValues, 
+          "K:/Projects/Cognitive Domains/data/V1_Means_SDs.csv",
           row.names = F)
