@@ -151,67 +151,122 @@ vetsa2Dat$CFCOR_V2[which(vetsa2Dat$ZFLUC_v2=="2")] = NA
 # Satandardization is based off of VETSA1 Means and SDs #
 #########################################################
 
-# Standardized MR1COR_v2
-vetsa2Dat$zMR1COR_v2 = (vetsa2Dat$MR1COR_v2 - 47.5498) / 13.4463
+# Load means and SDs from Vetsa 1
+scaleValues = read.csv("K:/Projects/Cognitive Domains/data/V1_Means_SDs.csv")
 
-# Standardized HFTOTCOR_v2
-vetsa2Dat$zHFTOTCOR_v2 = (vetsa2Dat$HFTOTCOR_V2 - 21.2055) / 9.0907
+# VETSA2 Visual-Spatial Ability #
+vetsa2Dat$zMR1COR_v2 = scale(vetsa2Dat$MR1COR_v2, 
+                       center=scaleValues$Mean[scaleValues$Variable=="MR1COR"]
+                       ,scale=scaleValues$SD[scaleValues$Variable=="MR1COR"])
+vetsa2Dat$zHFTOTCOR_v2 = scale(vetsa2Dat$HFTOTCOR_V2, 
+                         center=scaleValues$Mean[scaleValues$Variable=="HFTOTCOR"],
+                         scale=scaleValues$SD[scaleValues$Variable=="HFTOTCOR"])
 
-# VETSA2 Visual-Spatial Ability
 vetsa2Dat$zVisSpat_v2 = rowMeans(vetsa2Dat[c("zMR1COR_v2","zHFTOTCOR_v2")])
 
-# VETSA2 Abstract Reasoning
-vetsa2Dat$zAbsReason_v2 = (vetsa2Dat$MTXTRAN_v2 - (-3.5041)) / 0.7799
-
-vetsa2Dat$zdsfraw_v2 = (vetsa2Dat$dsfraw_V2 - 10.1910)/2.2851
-vetsa2Dat$zdsbraw_v2 = (vetsa2Dat$dsbraw_V2 - 6.5109)/2.1673
-vetsa2Dat$zlntot_v2 = (vetsa2Dat$lntot_V2 - 10.1434)/2.3546
-vetsa2Dat$zsspfraw_v2 = (vetsa2Dat$sspfraw_V2 - 8.0273)/1.6550
-vetsa2Dat$zsspbraw_v2 = (vetsa2Dat$sspbraw_V2 - 7.4063)/1.8013
-# Standardized/Transformed Reading Span
-vetsa2Dat$zrsatottran_v2 = (vetsa2Dat$RSATOTTRAN_V2 - (-3.2157))/0.7699 
+# VETSA2 Abstract Reasoning #
+vetsa2Dat$zMTXTRAN_v2 = scale(vetsa2Dat$MTXTRAN_v2, 
+                              center=scaleValues$Mean[scaleValues$Variable=="MTXTRAN"],
+                              scale=scaleValues$SD[scaleValues$Variable=="MTXTRAN"])
+vetsa2Dat$zAbsReason_v2 = vetsa2Dat$zMTXTRAN_v2
 
 # VETSA2 Working Memory
+vetsa2Dat$zdsfraw_v2 = scale(vetsa2Dat$dsfraw_V2, 
+                        center=scaleValues$Mean[scaleValues$Variable=="dsfraw"],
+                        scale=scaleValues$SD[scaleValues$Variable=="dsfraw"])
+vetsa2Dat$zdsbraw_v2 = scale(vetsa2Dat$dsfraw_V2, 
+                         center=scaleValues$Mean[scaleValues$Variable=="dsbraw"],
+                         scale=scaleValues$SD[scaleValues$Variable=="dsbraw"])
+vetsa2Dat$zlntot_v2 = scale(vetsa2Dat$lntot_V2, 
+                           center=scaleValues$Mean[scaleValues$Variable=="lntot"],
+                           scale=scaleValues$SD[scaleValues$Variable=="lntot"])
+vetsa2Dat$zsspfraw_v2 = scale(vetsa2Dat$sspfraw_V2, 
+                          center=scaleValues$Mean[scaleValues$Variable=="sspfraw"],
+                          scale=scaleValues$SD[scaleValues$Variable=="sspfraw"])
+vetsa2Dat$zsspbraw_v2 = scale(vetsa2Dat$sspbraw_V2, 
+                          center=scaleValues$Mean[scaleValues$Variable=="sspbraw"],
+                          scale=scaleValues$SD[scaleValues$Variable=="sspbraw"])
+vetsa2Dat$zrsatottran_v2 = scale(vetsa2Dat$RSATOTTRAN_V2, 
+                    center=scaleValues$Mean[scaleValues$Variable=="RSATOTrevtran"],
+                    scale=scaleValues$SD[scaleValues$Variable=="RSATOTrevtran"])
+
 vetsa2Dat$zSTWKMem_v2 = rowMeans(vetsa2Dat[,c("zdsfraw_v2","zdsbraw_v2",
                                               "zlntot_v2","zsspfraw_v2",
                                               "zsspbraw_v2","zrsatottran_v2")])
 
-vetsa2Dat$zcvatot_v2 = (vetsa2Dat$cvatot_v2 - 42.8466)/8.5101
-vetsa2Dat$zcvsdfr_v2 = (vetsa2Dat$CVSDFR_v2 - 8.6420)/2.7382 
-vetsa2Dat$zcvldfr_v2 = (vetsa2Dat$CVLDFR_v2 - 9.0669)/2.8865 
-vetsa2Dat$zlmitot_v2 = (vetsa2Dat$lmitot_V2 - 23.4731)/6.1563
-vetsa2Dat$zlmdtot_v2 = (vetsa2Dat$lmdtot_V2 - 20.0125)/6.6278
-vetsa2Dat$zvritot_v2 = (vetsa2Dat$vritot_V2 - 78.2430)/12.4047
-vetsa2Dat$zvrdtot_v2 = (vetsa2Dat$vrdtot_V2 - 54.7521)/19.5090
-#VETSA2 Episodic Memory
+# VETSA2 Episodic Memory #
+vetsa2Dat$zcvatot_v2 = scale(vetsa2Dat$cvatot_v2, 
+                        center=scaleValues$Mean[scaleValues$Variable=="cvatot"],
+                        scale=scaleValues$SD[scaleValues$Variable=="cvatot"])
+vetsa2Dat$zcvsdfr_v2 = scale(vetsa2Dat$CVSDFR_v2, 
+                         center=scaleValues$Mean[scaleValues$Variable=="CVSDFR"],
+                         scale=scaleValues$SD[scaleValues$Variable=="CVSDFR"])
+vetsa2Dat$zcvldfr_v2 = scale(vetsa2Dat$CVLDFR_v2, 
+                         center=scaleValues$Mean[scaleValues$Variable=="CVLDFR"],
+                         scale=scaleValues$SD[scaleValues$Variable=="CVLDFR"])
+vetsa2Dat$zlmitot_v2 = scale(vetsa2Dat$lmitot_V2, 
+                         center=scaleValues$Mean[scaleValues$Variable=="lmitot"],
+                         scale=scaleValues$SD[scaleValues$Variable=="lmitot"])
+vetsa2Dat$zlmdtot_v2 = scale(vetsa2Dat$lmdtot_V2, 
+                         center=scaleValues$Mean[scaleValues$Variable=="lmdtot"],
+                         scale=scaleValues$SD[scaleValues$Variable=="lmdtot"])
+vetsa2Dat$zvritot_v2 = scale(vetsa2Dat$vritot_V2, 
+                         center=scaleValues$Mean[scaleValues$Variable=="vritot"],
+                         scale=scaleValues$SD[scaleValues$Variable=="vritot"])
+vetsa2Dat$zvrdtot_v2 = scale(vetsa2Dat$vrdtot_V2, 
+                         center=scaleValues$Mean[scaleValues$Variable=="vrdtot"],
+                         scale=scaleValues$SD[scaleValues$Variable=="vrdtot"])
+
 vetsa2Dat$zEpsMem_v2 = rowMeans(vetsa2Dat[,c("zcvatot_v2","zcvsdfr_v2",
                                              "zcvldfr_v2","zlmitot_v2",
                                              "zlmdtot_v2","zvritot_v2",
                                              "zvrdtot_v2")])
 
-vetsa2Dat$zlfcor_v2 = (vetsa2Dat$LFCOR_V2 - 36.8792)/10.6089
-vetsa2Dat$zcfcor_v2 = (vetsa2Dat$CFCOR_V2 - 38.2818)/7.5251 
-# VETSA2 Verbal Fluency
+# VETSA2 Verbal Fluency #
+vetsa2Dat$zlfcor_v2 = scale(vetsa2Dat$LFCOR_V2, 
+                         center=scaleValues$Mean[scaleValues$Variable=="LFCOR"],
+                         scale=scaleValues$SD[scaleValues$Variable=="LFCOR"])
+vetsa2Dat$zcfcor_v2 = scale(vetsa2Dat$CFCOR_V2, 
+                        center=scaleValues$Mean[scaleValues$Variable=="CFCOR"],
+                        scale=scaleValues$SD[scaleValues$Variable=="CFCOR"])
+
 vetsa2Dat$zVerbFlu_v2 = rowMeans(vetsa2Dat[,c("zlfcor_v2","zcfcor_v2")])
 
-
-vetsa2Dat$zstrwraw_v2 = (vetsa2Dat$strwraw_V2 - 93.4668)/14.3125
-vetsa2Dat$zstrcraw_v2 = (vetsa2Dat$strcraw_V2 - 69.2195)/11.3414
-vetsa2Dat$ztrl2tran_v2 = (vetsa2Dat$TRL2TRAN_v2 - (-3.4530))/0.3138
-vetsa2Dat$ztrl3tran_v2 = (vetsa2Dat$TRL3TRAN_v2 - (-3.4520))/0.3274
-vetsa2Dat$ztrl4tran_v2 = (vetsa2Dat$TRL4ADJTRAN_v2 - (-10.3190))/1.2969
 # VETSA2 Processing Speed
+vetsa2Dat$zstrwraw_v2 = scale(vetsa2Dat$strwraw_V2, 
+                          center=scaleValues$Mean[scaleValues$Variable=="strwraw"],
+                          scale=scaleValues$SD[scaleValues$Variable=="strwraw"])
+vetsa2Dat$zstrcraw_v2 = scale(vetsa2Dat$strcwraw_V2, 
+                          center=scaleValues$Mean[scaleValues$Variable=="strcraw"],
+                          scale=scaleValues$SD[scaleValues$Variable=="strcraw"])
+vetsa2Dat$ztrl2tran_v2 = scale(vetsa2Dat$TRL2TRAN_v2, 
+                        center=scaleValues$Mean[scaleValues$Variable=="TRL2TRAN"],
+                        scale=scaleValues$SD[scaleValues$Variable=="TRL2TRAN"])
+vetsa2Dat$ztrl3tran_v2 = scale(vetsa2Dat$TRL3TRAN_v2, 
+                       center=scaleValues$Mean[scaleValues$Variable=="TRL3TRAN"],
+                       scale=scaleValues$SD[scaleValues$Variable=="TRL3TRAN"])
+
 vetsa2Dat$zProcSpeed_v2 = rowMeans(vetsa2Dat[,c("zstrwraw_v2","zstrcraw_v2",
                                             "ztrl2tran_v2","ztrl3tran_v2")])
 
 # VETSA2 Executive Functioning - Trails Switching
+vetsa2Dat$ztrl4tran_v2 = scale(vetsa2Dat$TRL4ADJTRAN_v2, 
+                     center=scaleValues$Mean[scaleValues$Variable=="TRL4ADJTRAN"],
+                     scale=scaleValues$SD[scaleValues$Variable=="TRL4ADJTRAN"])
+
 vetsa2Dat$zExecTrailsSwitch_v2 = vetsa2Dat$ztrl4tran_v2 
 
 # VETSA2 Executive Functioning - Category Switching
-vetsa2Dat$zExecCategorySwitch_v2 = (vetsa2Dat$CSSACCADJ_v2 - 6.4447)/2.8568
+vetsa2Dat$zCSSACCADJ_v2 = scale(vetsa2Dat$CSSACCADJ_v2, 
+                       center=scaleValues$Mean[scaleValues$Variable=="CSSACCADJ"],
+                       scale=scaleValues$SD[scaleValues$Variable=="CSSACCADJ"])
+vetsa2Dat$zExecCategorySwitch_v2 = vetsa2Dat$zCSSACCADJ_v2
 
 # VETSA2 Executive Functioing - Inhibition
-vetsa2Dat$zExecInhibit_v2 = (vetsa2Dat$strit_V2 - 47.1756)/6.8088 
+vetsa2Dat$zstrit_v2 = scale(vetsa2Dat$strit_V2, 
+                         center=scaleValues$Mean[scaleValues$Variable=="STRIT"],
+                         scale=scaleValues$SD[scaleValues$Variable=="STRIT"])
+vetsa2Dat$zExecInhibit_v2 = vetsa2Dat$zstrit_v2
 
 
 #-------------------#
@@ -224,9 +279,10 @@ vetsa2CogDomains = vetsa2Dat %>%
                 zdsfraw_v2,zdsbraw_v2,zlntot_v2,zsspfraw_v2,zsspbraw_v2,
                 zrsatottran_v2,zEpsMem_v2,zcvatot_v2,zcvsdfr_v2,zcvldfr_v2,
                 zlmitot_v2,zlmdtot_v2,zvritot_v2,zvrdtot_v2,zAbsReason_v2,
-                zVerbFlu_v2,zlfcor_v2,zcfcor_v2,zExecTrailsSwitch_v2,
-                zExecCategorySwitch_v2,zExecInhibit_v2,zProcSpeed_v2,
-                zstrwraw_v2,zstrcraw_v2,ztrl2tran_v2,ztrl3tran_v2,ztrl4tran_v2) 
+                zMTXTRAN_v2,zVerbFlu_v2,zlfcor_v2,zcfcor_v2,zExecTrailsSwitch_v2,
+                ztrl4tran_v2,zExecCategorySwitch_v2,zCSSACCADJ_v2,zExecInhibit_v2,
+                zstrit_v2,zProcSpeed_v2,zstrwraw_v2,zstrcraw_v2,ztrl2tran_v2,
+                ztrl3tran_v2) 
 
 # Save out data
 write.csv(vetsa2CogDomains, 
