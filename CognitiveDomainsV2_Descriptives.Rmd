@@ -10,15 +10,17 @@ output:
   word_document: default
 ---
 
-```{r}
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+```
+
+```{r, include=F}
 library(dplyr)
 library(psych)
 library(knitr)
 ```
 
-```{r global_options, include=FALSE}
-knitr::opts_chunk$set(warning=FALSE, message=FALSE)
-```
+
 
 ```{r, include=F}
 setwd('K:/Projects/Cognitive Domains')
