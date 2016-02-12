@@ -256,10 +256,10 @@ vetsa1Dat$zProcSpeed = rowMeans(vetsa1Dat[,c("zstrwraw","zstrcraw",
                                                 "ztrl2tran","ztrl3tran")],na.rm=T)
 
 # Vetsa1 Executive Functioning - Trails Switching 
-vetsa1Dat$ztrl4tran = scale(vetsa1Dat$TRL4ADJTRAN) 
-scaleValues = addScaleVals(scaleValues, "TRL4ADJTRAN", vetsa1Dat$ztrl4tran)
+vetsa1Dat$ztrl4adjtran = scale(vetsa1Dat$TRL4ADJTRAN) 
+scaleValues = addScaleVals(scaleValues, "TRL4ADJTRAN", vetsa1Dat$ztrl4adjtran)
 
-vetsa1Dat$zExecTrailsSwitch = vetsa1Dat$ztrl4tran 
+vetsa1Dat$zExecTrailsSwitch = vetsa1Dat$ztrl4adjtran 
 
 # vetsa1 Executive Functioning - Category Switching
 vetsa1Dat$zCSSACCADJ = scale(vetsa1Dat$CSSACCADJ)
@@ -268,10 +268,10 @@ scaleValues = addScaleVals(scaleValues, "CSSACCADJ", vetsa1Dat$zCSSACCADJ)
 vetsa1Dat$zExecCategorySwitch = vetsa1Dat$zCSSACCADJ
 
 # vetsa1 Executive Functioing - Inhibition
-vetsa1Dat$zSTRIT = scale(vetsa1Dat$STRIT) 
-scaleValues = addScaleVals(scaleValues, "STRIT", vetsa1Dat$zSTRIT)
+vetsa1Dat$zstrit = scale(vetsa1Dat$STRIT) 
+scaleValues = addScaleVals(scaleValues, "strit", vetsa1Dat$zstrit)
 
-vetsa1Dat$zExecInhibit = vetsa1Dat$zSTRIT
+vetsa1Dat$zExecInhibit = vetsa1Dat$zstrit
 
 
 #-------------------#
@@ -284,9 +284,9 @@ vetsa1CogDomains = vetsa1Dat %>%
                 zSTWKMem,zdsfraw,zdsbraw,zlntot,zsspfraw,zsspbraw,
                 zrsatotrevtran,zEpsMem,zcvatot,zcvsdfr,zcvldfr,
                 zlmitot,zlmdtot,zvritot,zvrdtot,zAbsReason,zMTXTRAN,
-                zVerbFlu,zlfcor,zcfcor,zExecTrailsSwitch,ztrl4tran,
-                zProcSpeed,zstrwraw,zstrcraw,ztrl2tran,ztrl3tran,ztrl4tran,
-                zExecCategorySwitch,zCSSACCADJ,zExecInhibit,zSTRIT) 
+                zVerbFlu,zlfcor,zcfcor,zExecTrailsSwitch,ztrl4adjtran,
+                zProcSpeed,zstrwraw,zstrcraw,ztrl2tran,ztrl3tran,
+                zExecCategorySwitch,zCSSACCADJ,zExecInhibit,zstrit) 
 
 # Save out data
 write.csv(vetsa1CogDomains, 

@@ -250,11 +250,11 @@ vetsa2Dat$zProcSpeed_v2 = rowMeans(vetsa2Dat[,c("zstrwraw_v2","zstrcraw_v2",
                                             "ztrl2tran_v2","ztrl3tran_v2")])
 
 # VETSA2 Executive Functioning - Trails Switching
-vetsa2Dat$ztrl4tran_v2 = scale(vetsa2Dat$TRL4ADJTRAN_v2, 
+vetsa2Dat$ztrl4adjtran_v2 = scale(vetsa2Dat$TRL4ADJTRAN_v2, 
                      center=scaleValues$Mean[scaleValues$Variable=="TRL4ADJTRAN"],
                      scale=scaleValues$SD[scaleValues$Variable=="TRL4ADJTRAN"])
 
-vetsa2Dat$zExecTrailsSwitch_v2 = vetsa2Dat$ztrl4tran_v2 
+vetsa2Dat$zExecTrailsSwitch_v2 = vetsa2Dat$ztrl4adjtran_v2 
 
 # VETSA2 Executive Functioning - Category Switching
 vetsa2Dat$zCSSACCADJ_v2 = scale(vetsa2Dat$CSSACCADJ_v2, 
@@ -264,8 +264,8 @@ vetsa2Dat$zExecCategorySwitch_v2 = vetsa2Dat$zCSSACCADJ_v2
 
 # VETSA2 Executive Functioing - Inhibition
 vetsa2Dat$zstrit_v2 = scale(vetsa2Dat$strit_V2, 
-                         center=scaleValues$Mean[scaleValues$Variable=="STRIT"],
-                         scale=scaleValues$SD[scaleValues$Variable=="STRIT"])
+                         center=scaleValues$Mean[scaleValues$Variable=="strit"],
+                         scale=scaleValues$SD[scaleValues$Variable=="strit"])
 vetsa2Dat$zExecInhibit_v2 = vetsa2Dat$zstrit_v2
 
 
@@ -280,9 +280,9 @@ vetsa2CogDomains = vetsa2Dat %>%
                 zrsatottran_v2,zEpsMem_v2,zcvatot_v2,zcvsdfr_v2,zcvldfr_v2,
                 zlmitot_v2,zlmdtot_v2,zvritot_v2,zvrdtot_v2,zAbsReason_v2,
                 zMTXTRAN_v2,zVerbFlu_v2,zlfcor_v2,zcfcor_v2,zExecTrailsSwitch_v2,
-                ztrl4tran_v2,zExecCategorySwitch_v2,zCSSACCADJ_v2,zExecInhibit_v2,
-                zstrit_v2,zProcSpeed_v2,zstrwraw_v2,zstrcraw_v2,ztrl2tran_v2,
-                ztrl3tran_v2) 
+                ztrl4adjtran_v2,zExecCategorySwitch_v2,zCSSACCADJ_v2,
+                zExecInhibit_v2,zstrit_v2,zProcSpeed_v2,zstrwraw_v2,
+                zstrcraw_v2,ztrl2tran_v2,ztrl3tran_v2) 
 
 # Save out data
 write.csv(vetsa2CogDomains, 
