@@ -167,7 +167,7 @@ vetsa2Dat$CFCOR_V2[which(vetsa2Dat$ZFLUC_v2=="2")] = NA
 #########################################################
 
 # Load means and SDs from Vetsa 1
-scaleValues = read.csv("K:/Projects/Cognitive Domains/data/V1_Means_SDs.csv")
+scaleValues = read.csv("K:/Projects/Cognitive Domains/data/V1_CognitiveDomains_Means_SDs.csv")
 
 # VETSA2 Visual-Spatial Ability #
 vetsa2Dat$zMR1COR_v2 = scale(vetsa2Dat$MR1COR_v2, 

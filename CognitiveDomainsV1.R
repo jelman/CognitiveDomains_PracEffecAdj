@@ -311,5 +311,5 @@ write.csv(vetsa1CogDomains,
 
 # Save out Means and SDs for use in scaling Vetsa 2 data
 write.csv(scaleValues, 
-          "K:/Projects/Cognitive Domains/data/V1_Means_SDs.csv",
+          "K:/Projects/Cognitive Domains/data/V1_CognitiveDomains_Means_SDs.csv",
           row.names = F)
