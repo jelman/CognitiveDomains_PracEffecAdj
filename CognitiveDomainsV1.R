@@ -1,3 +1,19 @@
+################################################################################
+# Calculates cognitive domains for VETSA 1.                                    #
+#                                                                              #
+# Based on syntax files in:                                                    #
+# M:/PSYCH/KREMEN/VETSA DATA FILES_852014/Cognitive Domains_April 2015 syntax/ #
+#                                                                              #
+# Individual tests from each domain are filtered based on quality              #
+# score ("z" rating). Tests scores are then standardized based on              #
+# VETSA 1 means and standard deviations. The composite score is                #
+# calculated as the mean of standardized test scores within each domain.       #
+#                                                                              #
+# Note: The mean of z-scored tests is not itself a z-score. Therefore,         #
+# domains comprised of multiple tests may have an SD less than 1.              #
+################################################################################
+
+
 library(sjmisc)
 library(dplyr)
 library(psych)
