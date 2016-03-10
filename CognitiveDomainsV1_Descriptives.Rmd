@@ -33,28 +33,6 @@ cogDomainVars = c("zVisSpat", "zSTWKMem", "zEpsMem", "zAbsReason",
                   "zVerbFlu", "zExecTrailsSwitch", "zExecCategorySwitch",
                   "zExecInhibit", "zProcSpeed")
 
-```
-
-
-
-```{r, echo=F}
-# Descriptives of cognitive domain scores
-kable(describe(vetsa1CogDomains[cogDomainVars], fast=T),
-       caption='Descriptive statistics of V1 Cognitive Domains')
-```
-
-
-
-```{r, echo=F}
-# Correlation between domains
-cormat = cor(vetsa1CogDomains[cogDomainVars], use="pairwise.complete.obs")
-cor.plot(cormat, main="Correlation of Cognitive Domains", numbers=T)
-```
-
-\newpage
-```{r, echo=F}
-## Calculate Alphas ##
-
 # Processing Speed Domain 
 procSpeedVars = c("zstrwraw","zstrcraw","ztrl2tran","ztrl3tran")
 
@@ -78,6 +56,33 @@ domains = list("Processing Speed" = procSpeedVars,
                "Short-Term Memory" = stmVars,
                "Verbal Fluency" = vfVars,
                "Visual Spatial" = visSpatialVars)
+
+```
+
+**Variable names comprising cognitive domains**
+```{r, echo=F}
+# Print out tests within each cognitive domain
+for (i in names(domains)){
+  cat(i,":", domains[[i]], "\n")
+}
+```
+
+
+```{r, echo=F}
+# Descriptives of cognitive domain scores
+kable(describe(vetsa1CogDomains[cogDomainVars], fast=T),
+       caption='Descriptive statistics of V1 Cognitive Domains')
+```
+
+
+```{r, echo=F}
+# Correlation between domains
+cormat = cor(vetsa1CogDomains[cogDomainVars], use="pairwise.complete.obs")
+cor.plot(cormat, main="Correlation of Cognitive Domains", numbers=T)
+```
+
+```{r, echo=F}
+## Calculate Alphas ##
 
 # Create dataframe of domain alpha results
 alphaSummary = data.frame()
