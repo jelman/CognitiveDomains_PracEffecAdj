@@ -18,7 +18,7 @@ library(sjmisc)
 library(dplyr)
 library(psych)
 
-# Load vetsa 2 merged data
+# Load vetsa 1 merged data
 vetsa1Dat = read_sas("K:/data/VETSA1_Aug2014/vetsa1merged_25aug2015_nomiss.sas7bdat")
 
 ##########################################

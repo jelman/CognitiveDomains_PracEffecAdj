@@ -29,9 +29,12 @@ setwd('K:/Projects/Cognitive Domains')
 vetsa1CogDomains = read.csv("./data/V1_CognitiveDomains.csv", stringsAsFactors = F)
 
 # Select domain scores
-cogDomainVars = c("zVisSpat", "zSTWKMem", "zEpsMem", "zAbsReason",
+cogDomainVars = c("zVerbal","zVisSpat", "zSTWKMem", "zEpsMem", "zAbsReason",
                   "zVerbFlu", "zExecTrailsSwitch", "zExecCategorySwitch",
                   "zExecInhibit", "zProcSpeed")
+
+# Verbal Ability Domain
+verbVars = c("zvoctran")
 
 # Processing Speed Domain 
 procSpeedVars = c("zstrwraw","zstrcraw","ztrl2tran","ztrl3tran")
@@ -51,7 +54,8 @@ vfVars = c("zlfcor","zcfcor")
 visSpatialVars = c("zHFTOTCOR","zMR1COR")
 
 # Make list of domain variables
-domains = list("Processing Speed" = procSpeedVars,
+domains = list("Verbal Ability" = verbVars,
+               "Processing Speed" = procSpeedVars,
                "Episodic Memory" = epMemVars,
                "Short-Term Memory" = stmVars,
                "Verbal Fluency" = vfVars,
@@ -84,9 +88,12 @@ cor.plot(cormat, main="Correlation of Cognitive Domains", numbers=T)
 ```{r, echo=F}
 ## Calculate Alphas ##
 
+# Remove domains comprised of only a single measure
+compositeDomains = names(domains)[!names(domains) %in% c("Verbal Ability")]
+
 # Create dataframe of domain alpha results
 alphaSummary = data.frame()
-for (domain in names(domains)){
+for (domain in compositeDomains){
   alphaStat = alpha(vetsa1CogDomains[domains[[domain]]])$total
   alphaSummary = rbind(alphaSummary, cbind(Domain=domain,alphaStat))
 }

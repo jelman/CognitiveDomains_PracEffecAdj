@@ -27,9 +27,9 @@ setwd('K:/Projects/Cognitive Domains')
 
 vetsa2CogDomains = read.csv("./data/V2_CognitiveDomains.csv", stringsAsFactors = F)
 
-cogDomainVars = c("zVisSpat_v2", "zSTWKMem_v2", "zEpsMem_v2", "zAbsReason_v2",
-                  "zVerbFlu_v2", "zExecTrailsSwitch_v2", "zExecCategorySwitch_v2",
-                  "zExecInhibit_v2", "zProcSpeed_v2")
+cogDomainVars = c("zVisSpat_v2","zSTWKMem_v2","zEpsMem_v2","zAbsReason_v2",
+                  "zVerbFlu_v2","zExecTrailsSwitch_v2","zExecCategorySwitch_v2",
+                  "zExecInhibit_v2","zProcSpeed_v2")
 
 # Processing Speed Domain 
 procSpeedVars = c("zstrwraw_v2","zstrcraw_v2","ztrl2tran_v2","ztrl3tran_v2")
@@ -81,9 +81,14 @@ Alphas of cognitive domains
 ```{r, echo=F}
 ## Calculate Alphas ##
 
+# Remove domains comprised of only a single measure
+# Note: This should not be contained in V2 dataset, this code kept for 
+# consistency with V1 code
+compositeDomains = names(domains)[!names(domains) %in% c("Verbal Ability")]
+
 # Create dataframe of domain alpha results
 alphaSummary = data.frame()
-for (domain in names(domains)){
+for (domain in compositeDomains){
   alphaStat = alpha(vetsa2CogDomains[domains[[domain]]])$total
   alphaSummary = rbind(alphaSummary, cbind(Domain=domain,alphaStat))
 }

@@ -163,7 +163,7 @@ vetsa2Dat$CFCOR_V2[which(vetsa2Dat$ZFLUC_v2=="2")] = NA
 
 #########################################################
 # Creating standardized scores and composite scores.    #
-# Satandardization is based off of VETSA1 Means and SDs #
+# Standardization is based off of VETSA1 Means and SDs #
 #########################################################
 
 # Load means and SDs from Vetsa 1
