@@ -171,8 +171,8 @@ scaleValues = read.csv("K:/Projects/Cognitive Domains/data/V1_CognitiveDomains_M
 
 # VETSA2 Visual-Spatial Ability #
 vetsa2Dat$zMR1COR_v2 = scale(vetsa2Dat$MR1COR_v2, 
-                       center=scaleValues$Mean[scaleValues$Variable=="MR1COR"]
-                       ,scale=scaleValues$SD[scaleValues$Variable=="MR1COR"])
+                       center=scaleValues$Mean[scaleValues$Variable=="MR1COR"],
+                       scale=scaleValues$SD[scaleValues$Variable=="MR1COR"])
 vetsa2Dat$zHFTOTCOR_v2 = scale(vetsa2Dat$HFTOTCOR_V2, 
                          center=scaleValues$Mean[scaleValues$Variable=="HFTOTCOR"],
                          scale=scaleValues$SD[scaleValues$Variable=="HFTOTCOR"])
@@ -288,18 +288,33 @@ vetsa2Dat$zExecInhibit_v2 = vetsa2Dat$zstrit_v2
 #  Save out datset  #
 #-------------------#
 
-# Select cognitive domain variables
-vetsa2CogDomains = vetsa2Dat %>%
-  dplyr::select(vetsaid,zVisSpat_v2,zMR1COR_v2,zHFTOTCOR_v2,zSTWKMem_v2,
-                zdsfraw_v2,zdsbraw_v2,zlntot_v2,zsspfraw_v2,zsspbraw_v2,
-                zrsatottran_v2,zEpsMem_v2,zcvatot_v2,zcvsdfr_v2,zcvldfr_v2,
-                zlmitot_v2,zlmdtot_v2,zvritot_v2,zvrdtot_v2,zAbsReason_v2,
-                zMTXTRAN_v2,zVerbFlu_v2,zlfcor_v2,zcfcor_v2,zExecTrailsSwitch_v2,
-                ztrl4adjtran_v2,zExecCategorySwitch_v2,zCSSACCADJ_v2,
-                zExecInhibit_v2,zstrit_v2,zProcSpeed_v2,zstrwraw_v2,
-                zstrcraw_v2,ztrl2tran_v2,ztrl3tran_v2) 
+zVars = c("zVisSpat_v2","zMR1COR_v2","zHFTOTCOR_v2","zSTWKMem_v2","zdsfraw_v2",
+          "zdsbraw_v2","zlntot_v2","zsspfraw_v2","zsspbraw_v2","zrsatottran_v2",
+          "zEpsMem_v2","zcvatot_v2","zcvsdfr_v2","zcvldfr_v2","zlmitot_v2",
+          "zlmdtot_v2","zvritot_v2","zvrdtot_v2","zAbsReason_v2","zMTXTRAN_v2",
+          "zVerbFlu_v2","zlfcor_v2","zcfcor_v2","zExecTrailsSwitch_v2",
+          "ztrl4adjtran_v2","zExecCategorySwitch_v2","zCSSACCADJ_v2","zExecInhibit_v2",
+          "zstrit_v2","zProcSpeed_v2","zstrwraw_v2","zstrcraw_v2","ztrl2tran_v2","ztrl3tran_v2")
+rawVars = c("MR1COR_v2","HFTOTCOR_V2","MTXTRAN_v2","dsfraw_V2","dsbraw_V2","lntot_V2",
+            "sspfraw_V2","sspbraw_V2","RSATOTTRAN_V2","cvatot_v2","CVSDFR_v2",
+            "CVLDFR_v2","lmitot_V2","lmdtot_V2","vritot_V2","vrdtot_V2","LFCOR_V2",
+            "CFCOR_V2","strwraw_V2","strcraw_V2","TRL2TRAN_v2","TRL3TRAN_v2",
+            "TRL4ADJTRAN_v2","CSSACCADJ_v2","strit_V2")
+
+# Select all cognitive domain variables
+vetsa2CogDomainsAll = vetsa2Dat %>%
+  dplyr::select(vetsaid,one_of(zVars,rawVars))
 
 # Save out data
-write.csv(vetsa2CogDomains, 
-          "K:/Projects/Cognitive Domains/data/V2_CognitiveDomains.csv",
+write.csv(vetsa2CogDomainsAll, 
+          "K:/Projects/Cognitive Domains/data/V2_CognitiveDomains_All.csv",
+          row.names = F)
+
+# Select only z-scored variables
+vetsa2CogDomainsZ = vetsa2Dat %>%
+  dplyr::select(vetsaid,one_of(zVars))
+
+# Save out z-scored data only
+write.csv(vetsa2CogDomainsZ, 
+          "K:/Projects/Cognitive Domains/data/V2_CognitiveDomains_Zscored.csv",
           row.names = F)

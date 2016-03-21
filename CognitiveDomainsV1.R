@@ -293,20 +293,33 @@ vetsa1Dat$zExecInhibit = vetsa1Dat$zstrit
 #-------------------#
 #  Save out datset  #
 #-------------------#
+zVars = c("zVerbal","zvoctran","zVisSpat","zMR1COR","zHFTOTCOR","zSTWKMem","zdsfraw",
+          "zdsbraw","zlntot","zsspfraw","zsspbraw","zrsatotrevtran","zEpsMem",
+          "zcvatot","zcvsdfr","zcvldfr","zlmitot","zlmdtot","zvritot","zvrdtot",
+          "zAbsReason","zMTXTRAN","zVerbFlu","zlfcor","zcfcor","zExecTrailsSwitch",
+          "ztrl4adjtran","zProcSpeed","zstrwraw","zstrcraw","ztrl2tran","ztrl3tran",
+          "zExecCategorySwitch","zCSSACCADJ","zExecInhibit","zstrit")
+rawVars = c("voctran","MR1COR","HFTOTCOR","MTXTRAN","dsfraw","dsbraw","lntot","sspfraw",
+            "sspbraw","RSATOTrevtran","cvatot","CVSDFR","CVLDFR","lmitot","lmdtot",
+            "vritot","vrdtot","LFCOR","CFCOR","strwraw","strcraw","TRL2TRAN","TRL3TRAN",
+            "TRL4ADJTRAN","CSSACCADJ","STRIT")
 
-# Select cognitive domain variables
-vetsa1CogDomains = vetsa1Dat %>%
-  dplyr::select(vetsaid,zVerbal,zvoctran,zVisSpat,zMR1COR,zHFTOTCOR,
-                zSTWKMem,zdsfraw,zdsbraw,zlntot,zsspfraw,zsspbraw,
-                zrsatotrevtran,zEpsMem,zcvatot,zcvsdfr,zcvldfr,
-                zlmitot,zlmdtot,zvritot,zvrdtot,zAbsReason,zMTXTRAN,
-                zVerbFlu,zlfcor,zcfcor,zExecTrailsSwitch,ztrl4adjtran,
-                zProcSpeed,zstrwraw,zstrcraw,ztrl2tran,ztrl3tran,
-                zExecCategorySwitch,zCSSACCADJ,zExecInhibit,zstrit) 
+# Select all cognitive domain variables
+vetsa1CogDomainsAll = vetsa1Dat %>%
+  dplyr::select(vetsaid,one_of(zVars,rawVars))
 
-# Save out data
-write.csv(vetsa1CogDomains, 
-          "K:/Projects/Cognitive Domains/data/V1_CognitiveDomains.csv",
+# Save out all data
+write.csv(vetsa1CogDomainsAll, 
+          "K:/Projects/Cognitive Domains/data/V1_CognitiveDomains_All.csv",
+          row.names = F)
+
+# Select only z-scored variables
+vetsa1CogDomainsZ = vetsa1Dat %>%
+  dplyr::select(vetsaid,one_of(zVars))
+
+# Save out z-scored data only
+write.csv(vetsa1CogDomainsZ, 
+          "K:/Projects/Cognitive Domains/data/V1_CognitiveDomains_Zscored.csv",
           row.names = F)
 
 # Save out Means and SDs for use in scaling Vetsa 2 data

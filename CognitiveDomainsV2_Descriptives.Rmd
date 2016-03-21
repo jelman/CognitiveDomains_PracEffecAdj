@@ -25,7 +25,7 @@ library(knitr)
 ```{r, include=F}
 setwd('K:/Projects/Cognitive Domains')
 
-vetsa2CogDomains = read.csv("./data/V2_CognitiveDomains.csv", stringsAsFactors = F)
+vetsa2CogDomains = read.csv("./data/V2_CognitiveDomains_Zscored.csv", stringsAsFactors = F)
 
 cogDomainVars = c("zVisSpat_v2","zSTWKMem_v2","zEpsMem_v2","zAbsReason_v2",
                   "zVerbFlu_v2","zExecTrailsSwitch_v2","zExecCategorySwitch_v2",

@@ -26,7 +26,7 @@ library(knitr)
 setwd('K:/Projects/Cognitive Domains')
 
 # Read in cognitive domain data
-vetsa1CogDomains = read.csv("./data/V1_CognitiveDomains.csv", stringsAsFactors = F)
+vetsa1CogDomains = read.csv("./data/V1_CognitiveDomains_Zscored.csv", stringsAsFactors = F)
 
 # Select domain scores
 cogDomainVars = c("zVerbal","zVisSpat", "zSTWKMem", "zEpsMem", "zAbsReason",
