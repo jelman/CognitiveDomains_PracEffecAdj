@@ -9,8 +9,9 @@
 # VETSA 1 means and standard deviations. The composite score is                #
 # calculated as the mean of standardized test scores within each domain.       #
 #                                                                              #
-# Note: The mean of z-scored tests is not itself a z-score. Therefore,         #
-# domains comprised of multiple tests may have an SD less than 1.              #
+# Note: The mean of z-scored tests is not itself a z-score. Domain comprised   #
+# of multiple tests may have an SD less than 1. Therefore, domains are further #
+# standardized based on VETSA 1 means and SDs                                  #
 ################################################################################
 
 
@@ -19,7 +20,10 @@ library(dplyr)
 library(psych)
 
 # Load vetsa 1 merged data
-vetsa1Dat = read_sas("K:/data/VETSA1_Aug2014/vetsa1merged_25aug2015_nomiss.sas7bdat")
+vetsa1Dat = read_sas("/home/jelman/netshare/K/data/VETSA1_Aug2014/vetsa1merged_25aug2015_nomiss.sas7bdat")
+
+# Convert to dataframe to avoid problems with attributes and labels later
+vetsa1Dat = tbl_df(vetsa1Dat)
 
 ##########################################
 # Replace missing data and trim outliers #
@@ -195,7 +199,9 @@ scaleValues = data.frame()
 vetsa1Dat$zvoctran = scale(vetsa1Dat$voctran)
 scaleValues = addScaleVals(scaleValues, "voctran", vetsa1Dat$zvoctran)
 
-vetsa1Dat$zVerbal = vetsa1Dat$zvoctran
+vetsa1Dat$Verbal = vetsa1Dat$zvoctran
+vetsa1Dat$zVerbal = scale(vetsa1Dat$Verbal)
+scaleValues = addScaleVals(scaleValues, "Verbal", vetsa1Dat$zVerbal)
 
 # vetsa1 Visual-Spatial Ability 
 vetsa1Dat$zMR1COR = scale(vetsa1Dat$MR1COR)
@@ -203,13 +209,17 @@ scaleValues = addScaleVals(scaleValues, "MR1COR", vetsa1Dat$zMR1COR)
 vetsa1Dat$zHFTOTCOR = scale(vetsa1Dat$HFTOTCOR)
 scaleValues = addScaleVals(scaleValues, "HFTOTCOR", vetsa1Dat$zHFTOTCOR)
 
-vetsa1Dat$zVisSpat = rowMeans(vetsa1Dat[c("zMR1COR","zHFTOTCOR")])
+vetsa1Dat$VisSpat = rowMeans(vetsa1Dat[c("zMR1COR","zHFTOTCOR")])
+vetsa1Dat$zVisSpat = scale(vetsa1Dat$VisSpat)
+scaleValues = addScaleVals(scaleValues, "VisSpat", vetsa1Dat$zVisSpat)
 
 # vetsa1 Abstract Reasoning 
 vetsa1Dat$zMTXTRAN = scale(vetsa1Dat$MTXTRAN)
 scaleValues = addScaleVals(scaleValues, "MTXTRAN", vetsa1Dat$zMTXTRAN)
 
-vetsa1Dat$zAbsReason = vetsa1Dat$zMTXTRAN
+vetsa1Dat$AbsReason = as.numeric(vetsa1Dat$zMTXTRAN)
+vetsa1Dat$zAbsReason = scale(vetsa1Dat$AbsReason)
+scaleValues = addScaleVals(scaleValues, "AbsReason", vetsa1Dat$zAbsReason)
 
 # Vetsa1 Working Memory 
 vetsa1Dat$zdsfraw = scale(vetsa1Dat$dsfraw)
@@ -225,9 +235,11 @@ scaleValues = addScaleVals(scaleValues, "sspbraw", vetsa1Dat$zsspbraw)
 vetsa1Dat$zrsatotrevtran = scale(vetsa1Dat$RSATOTrevtran) 
 scaleValues = addScaleVals(scaleValues, "RSATOTrevtran", vetsa1Dat$zrsatotrevtran)
 
-vetsa1Dat$zSTWKMem = rowMeans(vetsa1Dat[,c("zdsfraw","zdsbraw",
+vetsa1Dat$STWKMem = rowMeans(vetsa1Dat[,c("zdsfraw","zdsbraw",
                                               "zlntot","zsspfraw",
                                               "zsspbraw","zrsatotrevtran")])
+vetsa1Dat$zSTWKMem = scale(vetsa1Dat$STWKMem)
+scaleValues = addScaleVals(scaleValues, "STWKMem", vetsa1Dat$zSTWKMem)
 
 # vetsa1 Episodic Memory 
 vetsa1Dat$zcvatot = scale(vetsa1Dat$cvatot)
@@ -245,10 +257,12 @@ scaleValues = addScaleVals(scaleValues, "vritot", vetsa1Dat$zvritot)
 vetsa1Dat$zvrdtot = scale(vetsa1Dat$vrdtot)
 scaleValues = addScaleVals(scaleValues, "vrdtot", vetsa1Dat$zvrdtot)
 
-vetsa1Dat$zEpsMem = rowMeans(vetsa1Dat[,c("zcvatot","zcvsdfr",
+vetsa1Dat$EpsMem = rowMeans(vetsa1Dat[,c("zcvatot","zcvsdfr",
                                              "zcvldfr","zlmitot",
                                              "zlmdtot","zvritot",
                                              "zvrdtot")])
+vetsa1Dat$zEpsMem = scale(vetsa1Dat$EpsMem)
+scaleValues = addScaleVals(scaleValues, "EpsMem", vetsa1Dat$zEpsMem)
 
 # Vetsa1 Verbal Fluency 
 vetsa1Dat$zlfcor = scale(vetsa1Dat$LFCOR)
@@ -256,7 +270,9 @@ scaleValues = addScaleVals(scaleValues, "LFCOR", vetsa1Dat$zlfcor)
 vetsa1Dat$zcfcor = scale(vetsa1Dat$CFCOR)
 scaleValues = addScaleVals(scaleValues, "CFCOR", vetsa1Dat$zcfcor)
 
-vetsa1Dat$zVerbFlu = rowMeans(vetsa1Dat[,c("zlfcor","zcfcor")])
+vetsa1Dat$VerbFlu = rowMeans(vetsa1Dat[,c("zlfcor","zcfcor")])
+vetsa1Dat$zVerbFlu = scale(vetsa1Dat$VerbFlu)
+scaleValues = addScaleVals(scaleValues, "VerbFlu", vetsa1Dat$zVerbFlu)
 
 # Vetsa1 Processing Speed
 vetsa1Dat$zstrwraw = scale(vetsa1Dat$strwraw)
@@ -268,27 +284,34 @@ scaleValues = addScaleVals(scaleValues, "TRL2TRAN", vetsa1Dat$ztrl2tran)
 vetsa1Dat$ztrl3tran = scale(vetsa1Dat$TRL3TRAN)
 scaleValues = addScaleVals(scaleValues, "TRL3TRAN", vetsa1Dat$ztrl3tran)
 
-vetsa1Dat$zProcSpeed = rowMeans(vetsa1Dat[,c("zstrwraw","zstrcraw",
+vetsa1Dat$ProcSpeed = rowMeans(vetsa1Dat[,c("zstrwraw","zstrcraw",
                                                 "ztrl2tran","ztrl3tran")],na.rm=T)
+vetsa1Dat$zProcSpeed = scale(vetsa1Dat$ProcSpeed)
+scaleValues = addScaleVals(scaleValues, "ProcSpeed", vetsa1Dat$zProcSpeed)
 
 # Vetsa1 Executive Functioning - Trails Switching 
 vetsa1Dat$ztrl4adjtran = scale(vetsa1Dat$TRL4ADJTRAN) 
 scaleValues = addScaleVals(scaleValues, "TRL4ADJTRAN", vetsa1Dat$ztrl4adjtran)
 
-vetsa1Dat$zExecTrailsSwitch = vetsa1Dat$ztrl4adjtran 
+vetsa1Dat$ExecTrailsSwitch = as.numeric(vetsa1Dat$ztrl4adjtran )
+vetsa1Dat$zExecTrailsSwitch = scale(vetsa1Dat$ExecTrailsSwitch)
+scaleValues = addScaleVals(scaleValues, "ExecTrailsSwitch", vetsa1Dat$zExecTrailsSwitch)
 
 # vetsa1 Executive Functioning - Category Switching
 vetsa1Dat$zCSSACCADJ = scale(vetsa1Dat$CSSACCADJ)
 scaleValues = addScaleVals(scaleValues, "CSSACCADJ", vetsa1Dat$zCSSACCADJ)
 
-vetsa1Dat$zExecCategorySwitch = vetsa1Dat$zCSSACCADJ
+vetsa1Dat$ExecCategorySwitch = as.numeric(vetsa1Dat$zCSSACCADJ)
+vetsa1Dat$zExecCategorySwitch = scale(vetsa1Dat$ExecCategorySwitch)
+scaleValues = addScaleVals(scaleValues, "ExecCategorySwitch", vetsa1Dat$zExecCategorySwitch)
 
 # vetsa1 Executive Functioing - Inhibition
 vetsa1Dat$zstrit = scale(vetsa1Dat$STRIT) 
 scaleValues = addScaleVals(scaleValues, "strit", vetsa1Dat$zstrit)
 
-vetsa1Dat$zExecInhibit = vetsa1Dat$zstrit
-
+vetsa1Dat$ExecInhibit = as.numeric(vetsa1Dat$zstrit)
+vetsa1Dat$zExecInhibit = scale(vetsa1Dat$ExecInhibit)
+scaleValues = addScaleVals(scaleValues, "ExecInhibit", vetsa1Dat$zExecInhibit)
 
 #-------------------#
 #  Save out datset  #
@@ -299,30 +322,31 @@ zVars = c("zVerbal","zvoctran","zVisSpat","zMR1COR","zHFTOTCOR","zSTWKMem","zdsf
           "zAbsReason","zMTXTRAN","zVerbFlu","zlfcor","zcfcor","zExecTrailsSwitch",
           "ztrl4adjtran","zProcSpeed","zstrwraw","zstrcraw","ztrl2tran","ztrl3tran",
           "zExecCategorySwitch","zCSSACCADJ","zExecInhibit","zstrit")
-rawVars = c("voctran","MR1COR","HFTOTCOR","MTXTRAN","dsfraw","dsbraw","lntot","sspfraw",
-            "sspbraw","RSATOTrevtran","cvatot","CVSDFR","CVLDFR","lmitot","lmdtot",
-            "vritot","vrdtot","LFCOR","CFCOR","strwraw","strcraw","TRL2TRAN","TRL3TRAN",
-            "TRL4ADJTRAN","CSSACCADJ","STRIT")
+rawVars = c("Verbal","voctran","VisSpat","MR1COR","STWKMem","HFTOTCOR","AbsReason","MTXTRAN",
+            "dsfraw","dsbraw","lntot","sspfraw","sspbraw","RSATOTrevtran","EpsMem","cvatot",
+            "CVSDFR","CVLDFR","lmitot","lmdtot","vritot","vrdtot","VerbFlu","LFCOR","CFCOR",
+            "strwraw","strcraw","TRL2TRAN","TRL3TRAN","ExecTrailsSwitch","TRL4ADJTRAN",
+            "ExecCategorySwitch","CSSACCADJ","ExecInhibit","STRIT")
 
 # Select all cognitive domain variables
 vetsa1CogDomainsAll = vetsa1Dat %>%
-  dplyr::select(vetsaid,one_of(zVars,rawVars))
+ dplyr::select(vetsaid,one_of(zVars,rawVars))
 
 # Save out all data
-write.csv(vetsa1CogDomainsAll, 
-          "K:/Projects/Cognitive Domains/data/V1_CognitiveDomains_All.csv",
-          row.names = F)
+write.csv(vetsa1CogDomainsAll,
+         "/home/jelman/netshare/K/Projects/Cognitive Domains/data/V1_CognitiveDomains_All.csv",
+         row.names = F)
 
 # Select only z-scored variables
 vetsa1CogDomainsZ = vetsa1Dat %>%
-  dplyr::select(vetsaid,one_of(zVars))
+ dplyr::select(vetsaid,one_of(zVars))
 
 # Save out z-scored data only
 write.csv(vetsa1CogDomainsZ, 
-          "K:/Projects/Cognitive Domains/data/V1_CognitiveDomains_Zscored.csv",
+          "/home/jelman/netshare/K/Projects/Cognitive Domains/data/V1_CognitiveDomains_Zscored.csv",
           row.names = F)
 
 # Save out Means and SDs for use in scaling Vetsa 2 data
 write.csv(scaleValues, 
-          "K:/Projects/Cognitive Domains/data/V1_CognitiveDomains_Means_SDs.csv",
+          "/home/jelman/netshare/K/Projects/Cognitive Domains/data/V1_CognitiveDomains_Means_SDs.csv",
           row.names = F)
