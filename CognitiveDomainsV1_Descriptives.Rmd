@@ -3,8 +3,7 @@ title: "Cognitive Domains V1"
 author: "Jeremy Elman"
 date: '`r Sys.Date()`'
 output:
-  pdf_document:
-    latex_engine: xelatex
+  pdf_document: default
   html_document:
     theme: readable
   word_document: default
@@ -23,7 +22,7 @@ library(knitr)
 
 
 ```{r, include=F}
-setwd('K:/Projects/Cognitive Domains')
+setwd('/home/jelman/netshare/K/Projects/Cognitive Domains')
 
 # Read in cognitive domain data
 vetsa1CogDomains = read.csv("./data/V1_CognitiveDomains_Zscored.csv", stringsAsFactors = F)
