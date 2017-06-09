@@ -175,8 +175,8 @@ scaleValues = read.csv("/home/jelman/netshare/K/Projects/Cognitive Domains/data/
 
 # VETSA2 Visual-Spatial Ability #
 vetsa2Dat$zMR1COR_v2 = scale(vetsa2Dat$MR1COR_v2, 
-                       center=scaleValues$Mean[scaleValues$Variable=="MR1COR"],
-                       scale=scaleValues$SD[scaleValues$Variable=="MR1COR"])
+                       center=scaleValues$Mean[scaleValues$Variable=="MR1COR"]
+                       ,scale=scaleValues$SD[scaleValues$Variable=="MR1COR"])
 vetsa2Dat$zHFTOTCOR_v2 = scale(vetsa2Dat$HFTOTCOR_V2, 
                          center=scaleValues$Mean[scaleValues$Variable=="HFTOTCOR"],
                          scale=scaleValues$SD[scaleValues$Variable=="HFTOTCOR"])
@@ -319,6 +319,7 @@ vetsa2Dat$zExecInhibit_v2 = scale(vetsa2Dat$ExecInhibit_v2,
 #  Save out datset  #
 #-------------------#
 
+<<<<<<< HEAD
 zVars = c("zVisSpat_v2","zMR1COR_v2","zHFTOTCOR_v2","zSTWKMem_v2","zdsfraw_v2",
           "zdsbraw_v2","zlntot_v2","zsspfraw_v2","zsspbraw_v2","zrsatottran_v2",
           "zEpsMem_v2","zcvatot_v2","zcvsdfr_v2","zcvldfr_v2","zlmitot_v2",
@@ -349,4 +350,20 @@ vetsa2CogDomainsZ = vetsa2Dat %>%
 # Save out z-scored data only
 write.csv(vetsa2CogDomainsZ, 
           "/home/jelman/netshare/K/Projects/Cognitive Domains/data/V2_CognitiveDomains_Zscored.csv",
+=======
+# Select cognitive domain variables
+vetsa2CogDomains = vetsa2Dat %>%
+  dplyr::select(vetsaid,zVisSpat_v2,zMR1COR_v2,zHFTOTCOR_v2,zSTWKMem_v2,
+                zdsfraw_v2,zdsbraw_v2,zlntot_v2,zsspfraw_v2,zsspbraw_v2,
+                zrsatottran_v2,zEpsMem_v2,zcvatot_v2,zcvsdfr_v2,zcvldfr_v2,
+                zlmitot_v2,zlmdtot_v2,zvritot_v2,zvrdtot_v2,zAbsReason_v2,
+                zMTXTRAN_v2,zVerbFlu_v2,zlfcor_v2,zcfcor_v2,zExecTrailsSwitch_v2,
+                ztrl4adjtran_v2,zExecCategorySwitch_v2,zCSSACCADJ_v2,
+                zExecInhibit_v2,zstrit_v2,zProcSpeed_v2,zstrwraw_v2,
+                zstrcraw_v2,ztrl2tran_v2,ztrl3tran_v2) 
+
+# Save out data
+write.csv(vetsa2CogDomains, 
+          "K:/Projects/Cognitive Domains/data/V2_CognitiveDomains.csv",
+>>>>>>> parent of 68e7086... Save out raw scores in addition to z-scored variables
           row.names = F)

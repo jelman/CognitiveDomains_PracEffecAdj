@@ -316,6 +316,7 @@ scaleValues = addScaleVals(scaleValues, "ExecInhibit", vetsa1Dat$zExecInhibit)
 #-------------------#
 #  Save out datset  #
 #-------------------#
+<<<<<<< HEAD
 zVars = c("zVerbal","zvoctran","zVisSpat","zMR1COR","zHFTOTCOR","zSTWKMem","zdsfraw",
           "zdsbraw","zlntot","zsspfraw","zsspbraw","zrsatotrevtran","zEpsMem",
           "zcvatot","zcvsdfr","zcvldfr","zlmitot","zlmdtot","zvritot","zvrdtot",
@@ -344,6 +345,22 @@ vetsa1CogDomainsZ = vetsa1Dat %>%
 # Save out z-scored data only
 write.csv(vetsa1CogDomainsZ, 
           "/home/jelman/netshare/K/Projects/Cognitive Domains/data/V1_CognitiveDomains_Zscored.csv",
+=======
+
+# Select cognitive domain variables
+vetsa1CogDomains = vetsa1Dat %>%
+  dplyr::select(vetsaid,zVerbal,zvoctran,zVisSpat,zMR1COR,zHFTOTCOR,
+                zSTWKMem,zdsfraw,zdsbraw,zlntot,zsspfraw,zsspbraw,
+                zrsatotrevtran,zEpsMem,zcvatot,zcvsdfr,zcvldfr,
+                zlmitot,zlmdtot,zvritot,zvrdtot,zAbsReason,zMTXTRAN,
+                zVerbFlu,zlfcor,zcfcor,zExecTrailsSwitch,ztrl4adjtran,
+                zProcSpeed,zstrwraw,zstrcraw,ztrl2tran,ztrl3tran,
+                zExecCategorySwitch,zCSSACCADJ,zExecInhibit,zstrit) 
+
+# Save out data
+write.csv(vetsa1CogDomains, 
+          "K:/Projects/Cognitive Domains/data/V1_CognitiveDomains.csv",
+>>>>>>> parent of 68e7086... Save out raw scores in addition to z-scored variables
           row.names = F)
 
 # Save out Means and SDs for use in scaling Vetsa 2 data
