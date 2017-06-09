@@ -29,14 +29,6 @@ df = read.csv("~/netshare/M/PSYCH/KREMEN/Practice Effect Cognition/data/V1V2_Cog
 # Replace missing data and trim outliers #
 ##########################################
 
-#----------------#
-# Verbal Ability #
-#----------------#
-
-df$VOCRAW[which(df$ZVOCAB=="2")] = NA
-# Transformed VOCRAW
-df$voctran = -1 * sqrt(80-df$VOCRAW)
-
 #---------------------#
 # Visual-Spatial Data #
 #---------------------#
