@@ -1,0 +1,136 @@
+---
+title: "Cognitive Domains V1"
+author: "Jeremy Elman"
+date: '`r Sys.Date()`'
+output:
+  pdf_document: default
+  html_document:
+    theme: readable
+  word_document: default
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+```
+
+```{r, include=F}
+library(dplyr)
+library(psych)
+library(knitr)
+```
+
+
+
+```{r, include=F}
+# Read in cognitive domain data
+cogDomains = read.csv("~/netshare/M/PSYCH/KREMEN/Practice Effect Cognitive Domains/CognitiveDomains_V1V2_PracEffects.csv", stringsAsFactors = F)
+
+# Select domain scores
+cogDomainVarsV1 = c("zVisSpat", "zSTWKMem", "zEpsMem", "zAbsReason",
+                  "zVerbFlu", "zExecTrailsSwitch", "zExecCategorySwitch",
+                  "zExecInhibit", "zProcSpeed")
+cogDomainVarsV2 = paste0(cogDomainVarsV1, "_V2p")
+
+# Processing Speed Domain 
+procSpeedVarsV1 = c("zSTRWRAW","zSTRCRAW","zTRL2TRAN","zTRL3TRAN" )
+procSpeedVarsV2 = paste0(procSpeedVarsV1, "_V2p")
+
+# Episodic Memory Domain 
+epMemVarsV1 = c("zCVATOT","zCVSDFR","zCVLDFR","zLMITOT","zLMDTOT","zVRITOT","zVRDTOT")
+epMemVarsV2 = paste0(epMemVarsV1, "_V2p")
+
+# Short-Term Memory/Working Memory Domain 
+stmVarsV1 = c("zDSFRAW","zDSBRAW","zLNTOT","zSSPFRAW","zSSPBRAW","zRSATOTTRAN")
+stmVarsV2 = paste0(stmVarsV1, "_V2p")
+
+# Verbal Fluency Domain 
+vfVarsV1 = c("zLFCOR","zCFCOR")
+vfVarsV2 = paste0(vfVarsV1, "_V2p")
+
+# Visual Spatial Domain 
+visSpatialVarsV1 = c("zHFTOTCOR","zMR1COR")
+visSpatialVarsV2 = paste0(visSpatialVarsV1, "_V2p")
+
+# Make list of domain variables
+domainsV1 = list("Processing Speed" = procSpeedVarsV1,
+               "Episodic Memory" = epMemVarsV1,
+               "Short-Term Memory" = stmVarsV1,
+               "Verbal Fluency" = vfVarsV1,
+               "Visual Spatial" = visSpatialVarsV1)
+domainsV2 = list("Processing Speed" = procSpeedVarsV2,
+               "Episodic Memory" = epMemVarsV2,
+               "Short-Term Memory" = stmVarsV2,
+               "Verbal Fluency" = vfVarsV2,
+               "Visual Spatial" = visSpatialVarsV2)
+
+```
+
+**Variable names comprising cognitive domains**
+```{r, echo=F}
+# Print out tests within each cognitive domain
+for (i in names(domainsV1)){
+  cat(i,":", domainsV1[[i]], "\n")
+}
+```
+
+
+```{r, echo=F}
+# Descriptives of VETSA 1 cognitive domain scores
+kable(describe(cogDomains[cogDomainVarsV1], fast=T),
+       caption='Descriptive statistics of V1 Cognitive Domains', digits=2)
+```
+
+```{r, echo=F}
+# Descriptives of VETSA 2 cognitive domain scores
+kable(describe(cogDomains[cogDomainVarsV2], fast=T),
+       caption='Descriptive statistics of V2 Cognitive Domains', digits=2)
+```
+
+
+```{r, echo=F}
+# Correlation between VETSA 1 domains
+cormatV1 = cor(cogDomains[cogDomainVarsV1], use="pairwise.complete.obs")
+cor.plot(cormatV1, main="Correlation of VETSA 1 Cognitive Domains", numbers=T)
+```
+
+```{r, echo=F}
+# Correlation between VETSA 2 domains
+cormatV2 = cor(cogDomains[cogDomainVarsV2], use="pairwise.complete.obs")
+cor.plot(cormatV2, main="Correlation of VETSA 2 Cognitive Domains", numbers=T)
+```
+
+```{r, echo=F}
+## Calculate Alphas for VETSA 1 Cogniive Domains ##
+
+# Remove domains comprised of only a single measure
+compositeDomainsV1 = names(domainsV1)
+
+# Create dataframe of domain alpha results
+alphaSummaryV1 = data.frame()
+for (domain in compositeDomainsV1){
+  alphaStatV1 = alpha(cogDomains[domains[[domain]]])$total
+  alphaSummaryV1 = rbind(alphaSummaryV1, cbind(Domain=domain,alphaStatV1))
+}
+
+# Print summary of alphas
+kable(alphaSummaryV1, digits=3, caption='Alphas of VETSA 1 Cognitive Domains')
+```
+
+```{r, echo=F}
+## Calculate Alphas for VETSA 2 Cogniive Domains ##
+
+# Remove domains comprised of only a single measure
+compositeDomainsV2 = names(domainsV2)
+
+# Create dataframe of domain alpha results
+alphaSummaryV2 = data.frame()
+for (domain in compositeDomainsV2){
+  alphaStatV2 = alpha(cogDomains[domains[[domain]]])$total
+  alphaSummaryV2 = rbind(alphaSummaryV2, cbind(Domain=domain,alphaStatV2))
+}
+
+# Print summary of alphas
+kable(alphaSummaryV2, digits=3, caption='Alphas of VETSA 2 Cognitive Domains')
+```
+
+
