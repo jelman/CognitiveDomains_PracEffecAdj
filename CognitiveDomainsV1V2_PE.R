@@ -213,7 +213,7 @@ dfCogDomains = df %>%
                 zExecInhibit,zSTRIT,
                 zVisSpat_V2p,zMR1COR_V2p,zHFTOTCOR_V2p,
                 zSTWKMem_V2p,zDSFRAW_V2p,zDSBRAW_V2p,zLNTOT_V2p,zSSPFRAW_V2p,zSSPBRAW_V2p,zRSATOTTRAN_V2p,
-                zEpsMem,zCVATOT,zCVSDFR,zCVLDFR,zLMITOT,zLMDTOT,zVRITOT,zVRDTOT,
+                zEpsMem_V2p,zCVATOT_V2p,zCVSDFR_V2p,zCVLDFR_V2p,zLMITOT_V2p,zLMDTOT_V2p,zVRITOT_V2p,zVRDTOT_V2p,
                 zAbsReason_V2p,zMTXTRAN_V2p,
                 zVerbFlu_V2p,zLFCOR_V2p,zCFCOR_V2p,
                 zProcSpeed_V2p,zSTRWRAW_V2p,zSTRCRAW_V2p,zTRL2TRAN_V2p,zTRL3TRAN_V2p,
