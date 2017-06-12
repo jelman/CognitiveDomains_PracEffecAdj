@@ -223,5 +223,5 @@ dfCogDomains = df %>%
 
 # Save out data
 write.csv(dfCogDomains, 
-          "~/netshare/M/PSYCH/KREMEN/Practice Effect Cognitive Domains/data/V1V2_CognitiveDomains_PracEffects.csv",
+          "~/netshare/M/PSYCH/KREMEN/Practice Effect Cognitive Domains/CognitiveDomains_V1V2_PracEffects.csv",
           row.names = F)
