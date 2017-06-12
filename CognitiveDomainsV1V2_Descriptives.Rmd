@@ -1,5 +1,5 @@
 ---
-title: "Cognitive Domains V1"
+title: "Cognitive Domains: Practice effect corrected"
 author: "Jeremy Elman"
 date: '`r Sys.Date()`'
 output:
@@ -17,6 +17,7 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 library(dplyr)
 library(psych)
 library(knitr)
+library(corrplot)
 ```
 
 
@@ -73,6 +74,7 @@ for (i in names(domainsV1)){
 }
 ```
 
+----------------------------------------------------
 
 ```{r, echo=F}
 # Descriptives of VETSA 1 cognitive domain scores
@@ -86,18 +88,8 @@ kable(describe(cogDomains[cogDomainVarsV2], fast=T),
        caption='Descriptive statistics of V2 Cognitive Domains', digits=2)
 ```
 
+\newpage
 
-```{r, echo=F}
-# Correlation between VETSA 1 domains
-cormatV1 = cor(cogDomains[cogDomainVarsV1], use="pairwise.complete.obs")
-cor.plot(cormatV1, main="Correlation of VETSA 1 Cognitive Domains", numbers=T)
-```
-
-```{r, echo=F}
-# Correlation between VETSA 2 domains
-cormatV2 = cor(cogDomains[cogDomainVarsV2], use="pairwise.complete.obs")
-cor.plot(cormatV2, main="Correlation of VETSA 2 Cognitive Domains", numbers=T)
-```
 
 ```{r, echo=F}
 ## Calculate Alphas for VETSA 1 Cogniive Domains ##
@@ -108,7 +100,7 @@ compositeDomainsV1 = names(domainsV1)
 # Create dataframe of domain alpha results
 alphaSummaryV1 = data.frame()
 for (domain in compositeDomainsV1){
-  alphaStatV1 = alpha(cogDomains[domains[[domain]]])$total
+  alphaStatV1 = alpha(cogDomains[domainsV1[[domain]]])$total
   alphaSummaryV1 = rbind(alphaSummaryV1, cbind(Domain=domain,alphaStatV1))
 }
 
@@ -125,12 +117,31 @@ compositeDomainsV2 = names(domainsV2)
 # Create dataframe of domain alpha results
 alphaSummaryV2 = data.frame()
 for (domain in compositeDomainsV2){
-  alphaStatV2 = alpha(cogDomains[domains[[domain]]])$total
+  alphaStatV2 = alpha(cogDomains[domainsV2[[domain]]])$total
   alphaSummaryV2 = rbind(alphaSummaryV2, cbind(Domain=domain,alphaStatV2))
 }
 
 # Print summary of alphas
 kable(alphaSummaryV2, digits=3, caption='Alphas of VETSA 2 Cognitive Domains')
 ```
+
+\newpage
+
+```{r, echo=F}
+# Correlation between VETSA 1 domains
+cormatV1 = cor(cogDomains[cogDomainVarsV1], use="pairwise.complete.obs")
+corrplot(cormatV1, method="color", main="Correlation of VETSA 1 Cognitive Domains", 
+         addCoef.col="black", tl.col="black", tl.srt=45, tl.cex=.8, number.cex=.7, mar=c(0,0,2,0))
+```
+  
+-----------------------------
+  
+```{r, echo=F}
+# Correlation between VETSA 2 domains
+cormatV2 = cor(cogDomains[cogDomainVarsV2], use="pairwise.complete.obs")
+corrplot(cormatV2, method="color", main="Correlation of VETSA 2 Cognitive Domains", 
+         addCoef.col="black", tl.col="black", tl.srt=45, tl.cex=.8, number.cex=.7, mar=c(0,0,2,0))
+```
+
 
 
