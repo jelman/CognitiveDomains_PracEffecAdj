@@ -66,7 +66,7 @@ domainsV2 = list("Processing Speed" = procSpeedVarsV2,
 
 ```
 
-**Variable names comprising cognitive domains**
+**Composite domains are averages of the following variables:**
 ```{r, echo=F}
 # Print out tests within each cognitive domain
 for (i in names(domainsV1)){
